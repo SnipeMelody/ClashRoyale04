@@ -1,0 +1,83 @@
+import random
+# Define the different types of cards
+card_types = ["troop", "building", "spell"]
+# Define the different rarities of cards
+rarities = ["common", "rare", "epic", "legendary"]
+# Define the different costs of cards
+costs = [1, 2, 3, 4, 5, 6, 7, 8]
+# Define the different levels of cards
+levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+# Create a function to generate a random card
+def generate_card():
+  # Choose a random card type
+  card_type = random.choice(card_types)
+  # Choose a random rarity
+  rarity = random.choice(rarities)
+  # Choose a random cost
+  cost = random.choice(costs)
+  # Choose a random level
+  level = random.choice(levels)
+  # Create a card object
+  card = {
+    "type": card_type,
+    "rarity": rarity,
+    "cost": cost,
+    "level": level
+  }
+  # Return the card object
+  return card
+# Create a function to print a card
+def print_card(card):
+  # Print the card type
+  print("Type:", card["type"])
+  # Print the card rarity
+  print("Rarity:", card["rarity"])
+  # Print the card cost
+  print("Cost:", card["cost"])
+  # Print the card level
+  print("Level:", card["level"])
+# Create a function to play a game of Clash Royale
+def play_game():
+  # Create two decks of cards
+  deck1 = [generate_card() for i in range(8)]
+  deck2 = [generate_card() for i in range(8)]
+  # Shuffle the decks of cards
+  random.shuffle(deck1)
+  random.shuffle(deck2)
+  # Draw a starting hand of cards for each player
+  hand1 = [deck1.pop() for i in range(4)]
+  hand2 = [deck2.pop() ] for i in range(4)
+  # Play the game until one player wins
+  while True:
+    # Print the current state of the game
+    print("Player 1's hand:")
+    for card in hand1:
+      print_card(card)
+    print("Player 2's hand:")
+    for card in hand2:
+      print_card(card)
+    # Get the player's moves
+    move1 = input("Player 1, choose a card to play: ")
+    move2 = input("Player 2, choose a card to play: ")
+    # Play the cards
+    card1 = hand1.pop(int(move1) - 1)
+    card2 = hand2.pop(int(move2) - 1)
+    # Resolve the battle
+    if card1["cost"] > card2["cost"]:
+      print("Player 1 wins the battle!")
+    elif card2["cost"] > card1["cost"]:
+      print("Player 2 wins the battle!")
+    else:
+      print("The battle is a tie!")
+    # Check if either player has won the game
+    if len(deck1) == 0:
+      print("Player 2 wins the game!")
+      break
+    elif len(deck2) == 0:
+      print("Player 1 wins the game!")
+      break
+    # Draw new cards for each player
+    hand1.append(deck1.pop())
+    hand2.append(deck2.pop())
+# Play the game
+play_game()
